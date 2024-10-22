@@ -63,7 +63,11 @@ export const options: NextAuthOptions = {
             },
             async authorize(credentials): Promise<User | null> {
                 const user = users.find(user => user.name === credentials?.name);
-
+                
+                if (!user) {
+                    throw new Error('User not found'); 
+                }
+            
                 if (user && credentials?.password === user.password) {
                     const accessToken = uuidv4();
 

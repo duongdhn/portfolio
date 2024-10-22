@@ -17,8 +17,6 @@ const Profile = () => {
     name: '',
     email: '',
   });
-  console.log("session login: ", session);
-  
 
   React.useEffect(() => {
     if (status === "loading") {

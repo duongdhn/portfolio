@@ -20,6 +20,10 @@ export default function LoginBtn() {
   const { data: session }: { data: CustomSession | null } = useSession();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  if (!session) {
+    return <div>Not logged in</div>; 
+}
+
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
