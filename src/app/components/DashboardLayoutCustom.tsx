@@ -76,17 +76,16 @@ function useDemoRouter(initialPath: string): Router {
   return router;
 }
 
-
 const DashboardLayoutBasic: React.FC = () => {
   const router = useDemoRouter('/dashboard');
 
   const routeComponents = new Map<string, JSX.Element>([
-    ['/dashboard', <h2>Welcome to the Dashboard!</h2>],
-    ['/posts', <Posts />],
+    ['/dashboard', <h2 key="dashboard">Welcome to the Dashboard!</h2>],
+    ['/posts', <Posts key="posts" />],
   ]);
 
   const renderContent = () => {
-    return routeComponents.get(router.pathname) || <h2>Page not found</h2>;
+    return routeComponents.get(router.pathname) || <h2 key="not-found">Page not found</h2>;
   };
 
   return (

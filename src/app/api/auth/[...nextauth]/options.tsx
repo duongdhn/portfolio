@@ -45,7 +45,7 @@ export const options: NextAuthOptions = {
         GithubProvider({
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string,
-            profile(profile: NextAuthGithubProfile, tokens): User { 
+            profile(profile: NextAuthGithubProfile): User { 
                 const userRole = "user";
                 return {
                     id: profile.id.toString(), 
@@ -61,7 +61,7 @@ export const options: NextAuthOptions = {
                 name: { label: "Username", type: "text", placeholder: "janedoe" },
                 password: { label: "Password", type: "password", placeholder: "654321" }
             },
-            async authorize(credentials, req): Promise<User | null> {
+            async authorize(credentials): Promise<User | null> {
                 const user = users.find(user => user.name === credentials?.name);
 
                 if (user && credentials?.password === user.password) {
