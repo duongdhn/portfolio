@@ -44,19 +44,13 @@ function useDemoRouter(initialPath: string): Router {
     return router;
 }
 
-const Skeleton = styled('div')<{ height: number }>(({ theme, height }) => ({
-    backgroundColor: theme.palette.action.hover,
-    borderRadius: theme.shape.borderRadius,
-    height,
-    content: '" "',
-}));
 
 const authentication: Authentication = {
     signOut: () => signOut(),
     signIn: () => signIn(),
 };
 
-export default function DashboardLayoutBasic(props: any) {
+export default function DashboardLayoutBasic() {
     const router = useDemoRouter('/posts');
     const { data: session, status } = useSession();
     const [loading, setLoading] = React.useState(true);

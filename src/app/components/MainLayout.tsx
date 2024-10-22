@@ -9,7 +9,6 @@ import Typography from '@mui/material/Typography';
 import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginBtn from "./LoginBtn";
-import { useTheme } from "@emotion/react";
 import Link from "next/link";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -17,22 +16,12 @@ import 'react-toastify/dist/ReactToastify.css';
 export const metadata: Metadata = {
     title: "ズオンのブログ",
 };
-const information = {
-    name: "デム・ハイ・ズオン",
-    age: 21,
-    placeOfBirth: "ナム・デイン",
-    career: "Webアプリケーション開発者", //Web Application Developer
-    company: "NewIT株式会社（NewIT Inc.）",
-    companySocialLink: "https://www.facebook.com/newit.co.jp/",
-    school: "FPT"
-}
 
 export default function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    const theme = useTheme();
     return (
         <html lang="en">
             <body>

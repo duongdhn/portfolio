@@ -47,6 +47,7 @@ const Profile = () => {
         await update(updatedSession);
         toast.success("Updated successfully");
       } catch (err) {
+        console.log(err);
         toast.error("Error updating session");
       } finally {
         setLoading(false);

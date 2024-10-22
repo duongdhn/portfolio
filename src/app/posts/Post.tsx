@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useCallback, useEffect, useMemo } from 'react';
 import {
   Table,
@@ -23,21 +23,27 @@ import { deletePost, fetchPosts } from '@/lib/features/post/postSlice';
 import RefreshPost from '../components/RefreshPost';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+interface Post {
+  id: number;
+  title: string;
+  content: string;
+}
+
 const Posts = () => {
   const dispatch = useAppDispatch();
-  const posts = useAppSelector((state) => state.post.value);
+  const posts = useAppSelector((state) => state.post.value) as Post[]; 
 
   const handleEdit = (id: number) => {
     console.log(`Edit post with ID: ${id}`);
   };
 
-  const countPosts = (posts: any) => posts.length
+  const countPosts = (posts: Post[]) => posts.length;
 
   const handleRefreshPost = useCallback(() => {
     dispatch(fetchPosts());
-  }, [])
+  }, [dispatch]);
 
-  const memocountPosts = useMemo(() => countPosts(posts), [posts])
+  const memocountPosts = useMemo(() => countPosts(posts), [posts]);
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -46,7 +52,7 @@ const Posts = () => {
   return (
     <>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Box sx={{ marginBottom: '12px', display: 'flex' }} >
+        <Box sx={{ marginBottom: '12px', display: 'flex' }}>
           <Stack spacing={2} sx={{ width: 300 }}>
             <Autocomplete
               freeSolo
@@ -77,10 +83,10 @@ const Posts = () => {
           </Button>
           <RefreshPost handleRefreshPost={handleRefreshPost} />
         </Box>
-        <Typography variant="h5" gutterBottom >
+        <Typography variant="h5" gutterBottom>
           Total Post: {memocountPosts}
         </Typography>
-      </Box >
+      </Box>
 
       <TableContainer component={Paper}>
         <Table sx={{ width: '100%' }}>
@@ -111,7 +117,7 @@ const Posts = () => {
                     <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                       <Button
                         variant="contained"
-                        onClick={() => handleEdit(Number(post.id))}
+                        onClick={() => handleEdit(post.id)}
                         sx={{ marginRight: '8px' }}
                         size="small"
                       >

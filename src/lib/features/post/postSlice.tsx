@@ -23,6 +23,7 @@ export const fetchPosts = createAsyncThunk('post/fetchPosts', async () => {
     const response = await axiosInstance.get<Post[]>(`/posts`);
     return response.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed');
   }
 });
@@ -33,6 +34,7 @@ export const fetchPost = createAsyncThunk('post/fetchPost', async (idPost: numbe
     const response = await axiosInstance.get<Post>(`/posts/${idPost}`);
     return response.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed');
   }
 });
@@ -43,6 +45,7 @@ export const addPost = createAsyncThunk('post/addPost', async (newPost: Post) =>
     const response = await axiosInstance.post<Post>('/posts', newPost);
     return response.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed');
   }
 });
@@ -53,6 +56,7 @@ export const updatePost = createAsyncThunk('post/updatePost', async (updatePost:
     const response = await axiosInstance.put<Post>(`/posts/${updatePost.id}`, updatePost);
     return response.data;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed to update task');
   }
 });
@@ -63,6 +67,7 @@ export const deletePost = createAsyncThunk('post/deletePost', async (idPost: num
     await axiosInstance.delete<void>(`/posts/${idPost}`);
     return idPost;
   } catch (error) {
+    console.log(error);
     throw new Error('Failed');
   }
 });

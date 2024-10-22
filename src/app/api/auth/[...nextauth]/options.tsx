@@ -47,7 +47,7 @@ export const options: NextAuthOptions = {
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string,
             profile(profile: any): User {
-                let userRole = "user";
+                const userRole = "user";
                 return {
                     id: profile.id.toString(),
                     name: profile.name ?? profile.login,
@@ -63,6 +63,7 @@ export const options: NextAuthOptions = {
                 password: { label: "Password", type: "password", placeholder: "654321" }
             },
             async authorize(credentials, req): Promise<User | null> {
+                console.log(req);
                 const user = users.find(user => user.name === credentials?.name);
 
                 //On Production
