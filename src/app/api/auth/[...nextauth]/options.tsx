@@ -1,5 +1,5 @@
 import { NextAuthOptions } from "next-auth";
-import GithubProvider from "next-auth/providers/github";
+import GithubProvider, { GithubProfile as NextAuthGithubProfile } from "next-auth/providers/github";
 import CredentialProvider from "next-auth/providers/credentials";
 import { v4 as uuidv4 } from 'uuid';
 
@@ -20,7 +20,6 @@ const users: User[] = [
 const findUserByToken = async (accessToken: string): Promise<User | null> => {
     return users.find(user => user.accessToken === accessToken) || null;
 };
-
 
 declare module "next-auth" {
     interface Session {
@@ -46,12 +45,12 @@ export const options: NextAuthOptions = {
         GithubProvider({
             clientId: process.env.GITHUB_ID as string,
             clientSecret: process.env.GITHUB_SECRET as string,
-            profile(profile: any): User {
+            profile(profile: NextAuthGithubProfile, tokens): User { 
                 const userRole = "user";
                 return {
-                    id: profile.id.toString(),
+                    id: profile.id.toString(), 
                     name: profile.name ?? profile.login,
-                    email: profile.email,
+                    email: profile.email ?? undefined,
                     role: userRole,
                 };
             },
@@ -63,13 +62,7 @@ export const options: NextAuthOptions = {
                 password: { label: "Password", type: "password", placeholder: "654321" }
             },
             async authorize(credentials, req): Promise<User | null> {
-                console.log(req);
                 const user = users.find(user => user.name === credentials?.name);
-
-                //On Production
-                //Create access token
-                //Save token to db
-                //Return User
 
                 if (user && credentials?.password === user.password) {
                     const accessToken = uuidv4();
@@ -93,10 +86,6 @@ export const options: NextAuthOptions = {
             }
             if (trigger === 'update') {
                 const newName = session.user?.name;
-                
-                //On production
-                //Update information in db
-                //Get new user from db and return
 
                 if (newName) {
                     const newAccessToken = uuidv4();
@@ -109,11 +98,6 @@ export const options: NextAuthOptions = {
         },
         async session({ session, token }) {
             if (token) {
-
-                //On Production
-                //Find information user with access token
-                //Return information user
-
                 const userInfo = await findUserByToken(token.accessToken as string);
                 if (userInfo) {
                     session.user.name = userInfo.name;
